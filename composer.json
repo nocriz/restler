@@ -1,0 +1,20 @@
+{
+    "name": "nocriz/api",
+    "require": {
+        "phpunit/phpunit": "3.7.1",
+        "php": ">=5.3.0",
+        "luracast/restler": "3.0.0"
+    },
+    "minimum-stability": "alpha",
+    "authors":[
+        {
+            "name":"Ramon Barros",
+            "email": "contato@nocriz.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { 
+            "": "src/" 
+        }
+    }
+}
