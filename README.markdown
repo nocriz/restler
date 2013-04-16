@@ -1,6 +1,6 @@
 # Nocriz API
 
-[![Build Status](https://secure.travis-ci.org/codeguy/Nocriz.png)](http://travis-ci.org/codeguy/Nocriz)
+[![Build Status](https://travis-ci.org/nocriz/restler.png)](https://travis-ci.org/nocriz/restler)
 
 Nocriz API is a PHP micro framework that helps you.
 
@@ -32,20 +32,20 @@ You may install the Nocriz Framework with Composer (recommended) or manually.
 
 You need **PHP >= 5.3.0**. If you use encrypted cookies, you'll also need the `mcrypt` extension.
 
-You need **Slim Framework**.
+You need **Restler**.
 
 ### Hello World Tutorial
 
 system = Name system
 
-key = public key
+token = private key
 
-hash = email hash
+GET [system/client] Retrieve all
 
-GET [system/key/hash]
+GET [system/client/1] Retrieve with id == 1
 
-POST
+POST [system/client] Add a new
 
-PUT
+PUT [system/client/1] Update with id == 1
 
-DELETE
+DELETE [system/client/1] Delete with id == 1
