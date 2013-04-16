@@ -1,6 +1,6 @@
 # Nocriz API
 
-[![Build Status](https://secure.travis-ci.org/codeguy/Nocriz.png)](http://travis-ci.org/codeguy/Nocriz)
+[![Build Status](https://secure.travis-ci.org/nocriz/restler.png)](http://travis-ci.org/nocriz/restler)
 
 Nocriz API is a PHP micro framework that helps you.
 
