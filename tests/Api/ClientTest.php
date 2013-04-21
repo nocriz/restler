@@ -1,21 +1,21 @@
 <?php
 
-use Api\Say;
+use Api\Client;
 use Api\AbstractTest as AbstractTest;
 
-class SayTest extends AbstractTest
+class ClientTest extends AbstractTest
 {
     public function assertPreConditions()
     {	
         $this->assertTrue(
-                class_exists($class = 'Api\Say'),
+                class_exists($class = 'Api\Client'),
                 'Class not found: '.$class
         );
     }
 
     public function testInstantiationWithoutArgumentsShouldWork(){
-        $instance = new Say();
-        $this->assertInstanceOf('Api\Say', $instance);
+        $instance = new Client();
+        $this->assertInstanceOf('Api\Client', $instance);
     }
 
     /**
@@ -23,9 +23,6 @@ class SayTest extends AbstractTest
     */
     public function testSetItemsWithValidDataShouldWork()
     {
-        $instance = new Say();
-        $to = 'world';
-        $return = $instance->hello($to);
-        $this->assertEquals('Hello world!',$return);
+        $instance = new Client();
     }
 }
