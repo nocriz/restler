@@ -2,6 +2,7 @@
 namespace Api;
 
 use Api\AbstractApi\AbstractClient;
+use DB\MySQL;
 
 /**
  * Client
@@ -13,16 +14,34 @@ use Api\AbstractApi\AbstractClient;
  */
 class Client extends AbstractClient {
 	
+	protected $db;
 	protected $name;
 
+	public function __construct(){
+		$this->db = new MySQL('localhost','root','','api');
+	}
 	public function get($id=null){
-		try {
-			if(is_null($id)){
-				throw new Exception("O nome não pode ser vazio.");
-			}
-			$this->setName($name);
-		} catch (Exception $e) {
-			echo $e->getMessage();
+		if(!is_null($id)){
+			$this->db->where('id',$id);
 		}
+		
+		$this->db->select(array(
+					 'name'
+					,'email'
+					,'phone'
+					,'address'
+					,'number'
+					,'complement'
+					,'city'
+					,'country'
+					,'zip_code'
+				 ))
+				 ->from('client')
+				 ->query();
+		$results = $this->db->RowAll();
+		if(empty($results) && !is_null($id)){
+			throw new \RestException(400,"This ID doesn't exist");
+		}
+		return $results;
 	}
 }

@@ -24,7 +24,13 @@ require $composer_autoload;
 require_once APP_ROOT.DS.'vendor'.DS.'luracast'.DS.'restler'.DS.'vendor'.DS.'restler.php';
 
 use Luracast\Restler\Restler;
+use Luracast\Restler\Defaults;
+Defaults::$smartAutoRouting = false;
+Defaults::$useUrlBasedVersioning = true;
 
 $r = new Restler();
-$r->addAPIClass('Say');
+$r->setSupportedFormats('JsonFormat','XmlFormat');
+$r->setAPIVersion(1);
+$r->addAPIClass('Api\Say');
+$r->addAPIClass('Api\Client');
 $r->handle();
