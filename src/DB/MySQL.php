@@ -1055,7 +1055,7 @@ class MySQL {
 	 */
 	public function RowArray()
 	{
-		if(mysql_num_rows($this->last_query)){
+		if(@mysql_num_rows($this->last_query)){
 			return mysql_fetch_array($this->last_query);
 		}else{
 			return false;
@@ -1066,7 +1066,7 @@ class MySQL {
 	 * @return object
 	 */
 	public function RowObject(){
-		if(mysql_num_rows($this->last_query)){
+		if(@mysql_num_rows($this->last_query)){
 			return mysql_fetch_object($this->last_query);
 		}else{
 			return false;
@@ -1077,7 +1077,7 @@ class MySQL {
 	 * @return assoc
 	 */
 	public function RowAssoc(){
-		if(mysql_num_rows($this->last_query)){
+		if(@mysql_num_rows($this->last_query)){
 			return mysql_fetch_assoc($this->last_query);
 		}else{
 			return false;
@@ -1088,7 +1088,7 @@ class MySQL {
 	 * @return array
 	 */
 	public function RowAll(){
-		if(mysql_num_rows($this->last_query)){
+		if(@mysql_num_rows($this->last_query)){
 			$fetchAll = array();
 			while ( $row = mysql_fetch_array( $this->last_query, MYSQL_ASSOC ) )
 	        {

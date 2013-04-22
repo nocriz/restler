@@ -3,6 +3,7 @@ namespace Api;
 
 use Api\AbstractApi\AbstractClient;
 use DB\MySQL;
+use \RestException as Argument;
 
 /**
  * Client
@@ -19,6 +20,9 @@ class Client extends AbstractClient {
 
 	public function __construct(){
 		$this->db = new MySQL('localhost','root','','api');
+		if($this->db->connected()==false){
+			throw new Argument(400,$this->db->error());
+		}
 	}
 	public function get($id=null){
 		if(!is_null($id)){
@@ -40,7 +44,7 @@ class Client extends AbstractClient {
 				 ->query();
 		$results = $this->db->RowAll();
 		if(empty($results) && !is_null($id)){
-			throw new \RestException(400,"This ID doesn't exist");
+			throw new Argument(400,"This ID doesn't exist");
 		}
 		return $results;
 	}
