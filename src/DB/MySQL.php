@@ -1,5 +1,7 @@
 <?php namespace DB;
 
+use \Exception as Exception;
+
 /**
  * MySQL Application
  *
