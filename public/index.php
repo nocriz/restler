@@ -31,6 +31,26 @@ Defaults::$useUrlBasedVersioning = true;
 $r = new Restler();
 $r->setSupportedFormats('JsonFormat','XmlFormat');
 $r->setAPIVersion(1);
+/**
+ * GET http://localhost/restler/public/say/hello =>  Hello world!
+ * GET http://localhost/restler/public/say/hello/Fil => Hello Fil! 
+ */
 $r->addAPIClass('Api\Say');
+
+/**
+ * GET http://localhost/restler/public/client => 401 Unauthorized
+ * GET Authorization Basic Njc4OTA6eA== http://localhost/restler/public/client => 200 OK
+ */
 $r->addAPIClass('Api\Client');
+
+/**
+ * GET http://localhost/restler/public/access/admin => 401 Unauthorized
+ * GET Authorization Basic Njc4OTA6eA== http://localhost/restler/public/access/admin => 200 OK
+ */
+$r->addAPIClass('Api\Access');
+
+/**
+ * Authorization Control
+ */
+$r->addAuthenticationClass('Api\AccessControl');
 $r->handle();

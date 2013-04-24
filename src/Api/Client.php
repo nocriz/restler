@@ -24,6 +24,11 @@ class Client extends AbstractClient {
 			throw new Argument(400,$this->db->error());
 		}
 	}
+
+	/**
+     * @access protected
+     * @class  AccessControl {@requires user}
+     */
 	public function get($id=null){
 		if(!is_null($id)){
 			$this->db->where('id',$id);
