@@ -13,12 +13,18 @@ use Api\InterfaceApi\InterfaceClient;
  */
 abstract class AbstractClient implements InterfaceClient {
 	
+	protected $id;
 	protected $name;
 
+	/*
 	public function setName($name=null){
 		$this->name = $name;
 	}
 	public function getName(){
 		return $this->name;
+	}
+	*/
+	public function getId(){
+		return $this->id;
 	}	
 }

@@ -16,7 +16,6 @@ use \RestException as Argument;
 class Client extends AbstractClient {
 	
 	protected $db;
-	protected $name;
 
 	public function __construct(){
 		$this->db = new MySQL('localhost','root','','api');

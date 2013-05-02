@@ -14,7 +14,7 @@ interface InterfaceClient {
 	 *======= Methods Set =============
 	 *=================================
 	 */
-	public function setName($name=null);
+	//public function setName($name=null);
 	//public function setEmail($email=null);
 	//public function setPassword($password=null);
 	//public function setPhone($phone=null);
@@ -35,7 +35,7 @@ interface InterfaceClient {
 	 *======= Methods Get =============
 	 *=================================
 	 */
-	public function getName();
+	//public function getName();
 	//public function getEmail();
 	//public function getPassword();
 	//public function getPhone();

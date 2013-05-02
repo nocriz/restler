@@ -25,32 +25,41 @@ require_once APP_ROOT.DS.'vendor'.DS.'luracast'.DS.'restler'.DS.'vendor'.DS.'res
 
 use Luracast\Restler\Restler;
 use Luracast\Restler\Defaults;
+use Luracast\Restler\Resources;
+
 Defaults::$smartAutoRouting = false;
 Defaults::$useUrlBasedVersioning = true;
 
 $r = new Restler();
+/**
+ * Para utilizar o API-Explorer 
+ */
+$r->addAPIClass('Luracast\\Restler\\Resources'); //this creates resources.json at API Root
+
 $r->setSupportedFormats('JsonFormat','XmlFormat');
 $r->setAPIVersion(1);
+
 /**
  * GET http://localhost/restler/public/say/hello =>  Hello world!
  * GET http://localhost/restler/public/say/hello/Fil => Hello Fil! 
  */
-$r->addAPIClass('Api\Say');
+$r->addAPIClass('Api\\Say');
 
 /**
  * GET http://localhost/restler/public/client => 401 Unauthorized
  * GET Authorization Basic Njc4OTA6eA== http://localhost/restler/public/client => 200 OK
  */
-$r->addAPIClass('Api\Client');
+$r->addAPIClass('Api\\Client');
 
 /**
  * GET http://localhost/restler/public/access/admin => 401 Unauthorized
  * GET Authorization Basic Njc4OTA6eA== http://localhost/restler/public/access/admin => 200 OK
  */
-$r->addAPIClass('Api\Access');
+$r->addAPIClass('Api\\Access');
 
 /**
  * Authorization Control
  */
-$r->addAuthenticationClass('Api\AccessControl');
+$r->addAuthenticationClass('Api\\AccessControl');
+
 $r->handle();
