@@ -1,4 +1,4 @@
-<?php namespace DB;
+<?php namespace Database\Driver;
 
 use \Exception as Exception;
 
@@ -293,7 +293,7 @@ class MySQL {
 	 */
 	public function error_number()
 	{
-		return mysql_errno($this->db);
+		return @mysql_errno($this->db);
 	}
 
 	/**
@@ -304,7 +304,7 @@ class MySQL {
 	 */
 	public function error()
 	{
-		return mysql_error($this->db);
+		return @mysql_error($this->db);
 	}
 
 

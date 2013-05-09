@@ -21,7 +21,7 @@ class Client extends AbstractClient {
      */
 	public function get($id=null){
 		
-		$results = ModelClient::get($id)->getArray();
+		$results = ModelClient::get($id);
 
 		if(empty($results) && !is_null($id)){
 			throw new Argument(400,"This ID doesn't exist");

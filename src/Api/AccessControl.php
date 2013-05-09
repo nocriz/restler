@@ -7,7 +7,7 @@ class AccessControl implements iAuthenticate
     public static $role = 'user';
     public function __isAllowed()
     {
-        $roles = array('033d888e4b5223a90989350c0d7dc044' => 'user', '67890' => 'admin');
+        $roles = array('033d888e4b5223a90989350c0d7dc044' => 'user', '123456' => 'admin');
         if (!isset($_SERVER['PHP_AUTH_USER'])|| !array_key_exists($_SERVER['PHP_AUTH_USER'], $roles)) {
             return false;
         }
