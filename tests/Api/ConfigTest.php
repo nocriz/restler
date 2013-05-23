@@ -1,21 +1,23 @@
 <?php
 
-use \system\config\Config as Config;
-use system\AbstractDataAccessTest as AbstractDataAccessTest;
+use Api\Config;
+use Api\AbstractTest as AbstractTest;
 
-class ConfigTest extends AbstractDataAccessTest
+class ConfigTest extends AbstractTest
 {
+    public $instance;
+
     public function assertPreConditions()
     {	
         $this->assertTrue(
-                class_exists($class = '\system\config\Config'),
+                class_exists($class = 'Api\Config'),
                 'Class not found: '.$class
         );
+        $this->instance = new Config();
     }
 
     public function testInstantiationWithoutArgumentsShouldWork(){
-        $instance = new Config();
-        $this->assertInstanceOf('\system\config\Config', $instance);
+        $this->assertInstanceOf('Api\Config', $this->instance);
     }
 
     /**
@@ -23,14 +25,13 @@ class ConfigTest extends AbstractDataAccessTest
     */
     public function testSetItemsWithValidDataShouldWork()
     {
-        $instance = new Config();
         $item = 'application.key';
         $array = array(
           'application' => array('key'=>'1234567')
         );
         Config::set($item,'1234567');
         //$this->assertEquals($instance, $return, 'Returned value should be the same instance for fluent interface');
-        $this->assertAttributeEquals($array, 'items', $instance, 'Attribute was not correctly set');
+        $this->assertAttributeEquals($array, 'items', $this->instance, 'Attribute was not correctly set');
     }
 
     /**

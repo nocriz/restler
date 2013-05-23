@@ -1,15 +1,15 @@
 <?php namespace Api;
 
-use Api\IntercafeApi\InterfaceConfig;
+use Api\InterfaceApi\InterfaceConfig;
 use \InvalidArgumentException as Argument;
 
 /**
  * Config carregamento das configurações API Nocriz
  * @abstract
  * @author Ramon Barros
- * @package system
+ * @package restler
  * @subpackage config
- * @category api,config, design pattern
+ * @category api
  */
 class Config implements InterfaceConfig {
 
