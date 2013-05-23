@@ -17,7 +17,7 @@ class ModelClient {
 	public static function get($id=null){
 		DB::table('client');
 		if(!is_null($id)){
-			return DB::get('id',$id);
+			return DB::get($id);
 		}
 		$columms = array(
 					 'name'

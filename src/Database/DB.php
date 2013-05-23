@@ -2,8 +2,10 @@
 
 //use \InvalidArgumentException as Argument;
 
+use Database\DAO\DAO;
 use Database\DAO\DB_DAO;
 use Database\Registry;
+use Database\MySQL\ConnectorConfig as MySQL;
 
 class DB {
 	
@@ -18,17 +20,12 @@ class DB {
 		switch ($driver)
 		{
 			case 'mysql':
-				$defaultConnectorConfig = new Database\MySQL\ConnectorConfig( DBHOST, DBBASE, DBUSER, DBPASS );
+				$defaultConnectorConfig = new MySQL( 'localhost', 'restler', 'root', '' );
 				$registry->set( 'defaultConnectorConfig', $defaultConnectorConfig );
-				/*
-				if(static::$db->connected()==false){
-					throw new Argument(400,static::$db->error());
-				}
-				*/
 			break;
 		}
 
-		$defaultDAO = new Database\DAO\DAO( $defaultConnectorConfig );
+		$defaultDAO = new DAO( $defaultConnectorConfig );
 		$registry->set( 'defaultDAO', $defaultDAO );
 		$this->db = new DB_DAO( $registry->get( 'defaultDAO' ) );
 		return $this->db;

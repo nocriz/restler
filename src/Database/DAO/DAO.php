@@ -1,4 +1,4 @@
-<?php namesapce Database\DAO;
+<?php namespace Database\DAO;
 
 use \PDO;
 use Database\AbstractConnectorConfig;
