@@ -1,24 +1,29 @@
-<?php namespace Api;
+<?php namespace Api\Access;
 
-use Models\ModelClient;
+use \Database\DB as DB;
 use \Luracast\Restler\iAuthenticate;
 use \Luracast\Restler\Resources;
-class AccessControl implements iAuthenticate
+
+class Control implements iAuthenticate
 {
     public static $requires = 'client';
     public static $role = 'client';
+
+    public function setRole($role=''){
+        static::$role = $role;
+    }
+
     public function __isAllowed()
     {
-        $token = $_SERVER['PHP_AUTH_USER'];
-        var_dump(ModelClient::token($token)); 
-        //var_dump($roles);
-        $roles = array('b599cfee8a52251902ed4a52cbe635cf' => 'client', '123456' => 'admin');
-        //var_dump($roles);
+        DB::table(static::$role)->where('token',$_SERVER['PHP_AUTH_USER']);
+        $table = DB::get(array('token'))->RowAssoc();
+        $roles[$table['token']]=static::$role;
+        var_dump($roles);
         if (!isset($_SERVER['PHP_AUTH_USER'])|| !array_key_exists($_SERVER['PHP_AUTH_USER'], $roles)) {
             return false;
         }
         static::$role = $roles[$_SERVER['PHP_AUTH_USER']];
-        Resources::$accessControlFunction = 'AccessControl::verifyAccess';
+        Resources::$accessControlFunction = 'Control::verifyAccess';
         return static::$requires == static::$role || static::$role == 'admin';
     }
     /**
@@ -27,8 +32,8 @@ class AccessControl implements iAuthenticate
     public static function verifyAccess(array $m)
     {
         $requires =
-            isset($m['class']['AccessControl']['properties']['requires'])
-                ? $m['class']['AccessControl']['properties']['requires']
+            isset($m['class']['Control']['properties']['requires'])
+                ? $m['class']['Control']['properties']['requires']
                 : false;
         return $requires
             ? static::$role == 'admin' || static::$role == $requires

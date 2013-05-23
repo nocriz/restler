@@ -5,24 +5,36 @@ use Api\AbstractTest as AbstractTest;
 
 class ClientTest extends AbstractTest
 {
+    public $instance;
+
     public function assertPreConditions()
     {	
         $this->assertTrue(
                 class_exists($class = 'Api\Client'),
                 'Class not found: '.$class
         );
+        $this->instance = new Client();
     }
 
     public function testInstantiationWithoutArgumentsShouldWork(){
-        $instance = new Client();
-        $this->assertInstanceOf('Api\Client', $instance);
+        $this->assertInstanceOf('Api\Client', $this->instance);
     }
 
     /**
     * @depends testInstantiationWithoutArgumentsShouldWork
     */
-    public function testSetItemsWithValidDataShouldWork()
+    public function testSetIdWithValidDataShouldWork()
     {
-        $instance = new Client();
+        $return = $this->instance->setId(1);
+        $this->assertInstanceOf('Api\Client', $return);
+    }
+
+    /**
+    * @depends testInstantiationWithoutArgumentsShouldWork
+    */
+    public function testGetIdDataShouldWork()
+    {
+        $this->instance->setId(1);
+        $this->assertEquals($this->instance->getId(),1);
     }
 }

@@ -17,7 +17,7 @@ class ModelClient {
 	public static function get($id=null){
 		DB::table('client');
 		if(!is_null($id)){
-			DB::where('id',$id);
+			return DB::get('id',$id);
 		}
 		$columms = array(
 					 'name'
@@ -30,6 +30,12 @@ class ModelClient {
 					,'country'
 					,'zip_code'
 				 );
-		return DB::get($columms)->RowAssoc();
+		return DB::getAll();
+	}
+
+	public static function token($token=''){
+		 DB::table('client')->where('token',$token);
+        $client = DB::get(array('token'))->RowObject();
+        return $client->token;  
 	}
 }

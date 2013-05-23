@@ -24,11 +24,11 @@ abstract class AbstractClient implements InterfaceClient {
 		return $this->name;
 	}
 	*/
-	protected function setId($id=null){
+	public function setId($id=null){
 		$this->id=$id;
 		return $this;
 	}
-	protected function getId(){
+	public function getId(){
 		return $this->id;
 	}	
 }

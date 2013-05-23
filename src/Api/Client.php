@@ -16,8 +16,9 @@ use Models\ModelClient;
 class Client extends AbstractClient {
 
 	/**
+	 * url GET /client/:id
      * @access protected
-     * @class  AccessControl {@requires user}
+     * @class  AccessControl {@requires client}
      */
 	public function get($id=null){
 		
