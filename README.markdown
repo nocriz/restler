@@ -34,18 +34,20 @@ You need **PHP >= 5.3.0**. If you use encrypted cookies, you'll also need the `m
 
 You need **Restler**.
 
-### Hello World Tutorial
+### Tutorial
 
 system = Name system
 
 token = private key
 
-GET [system/client] Retrieve all
+client = class Api\Client;
 
-GET [system/client/1] Retrieve with id == 1
+GET [system/public/client] Retrieve all
 
-POST [system/client] Add a new
+GET [system/public/client/1] Retrieve with id == 1
 
-PUT [system/client/1] Update with id == 1
+POST [system/public/client] Add a new
+
+PUT [system/public/client/1] Update with id == 1
 
 DELETE [system/client/1] Delete with id == 1
