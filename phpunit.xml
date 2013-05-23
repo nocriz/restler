@@ -23,18 +23,4 @@
     </whitelist>
   </filter>
 
-  <!-- Logging -->
-  <logging>
-    <log type="coverage-clover" target="tests/coverage/clover.xml" />
-    <log type="coverage-html" target="tests/coverage/html" highlight="true" />
-    <log type="coverage-text" target="php://stdout" />
-  </logging>
-
-  <!--php>
-      <var name="BD_DSN" value="mysql:dbname=tabelateste;host=localhost" />
-      <var name="BD_USUARIO" value="root" />
-      <var name="BD_SENHA" value="" />
-      <var name="BD_NOMEBD" value="tabelateste" />
-  </php-->
-
 </phpunit>

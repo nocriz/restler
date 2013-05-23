@@ -26,7 +26,23 @@ Nocriz API is a PHP micro framework that helps you.
 
 You may install the Nocriz Framework with Composer (recommended) or manually.
 
+<!--
 [Read how to install Nocriz](http://docs.nocriz.com/getting-started-install)
+-->
+```
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar install
+```
+
+Tests without Coverage
+```
+$ bin/phpunit --configuration phpunit.xml
+```
+
+Tests with coverage
+```
+$ bin/phpunit --configuration phpunit.xml.dist
+```
 
 ### System Requirements
 
