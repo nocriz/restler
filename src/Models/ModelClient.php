@@ -15,10 +15,6 @@ use Database\DB as DB;
 class ModelClient {
 
 	public static function get($id=null){
-		DB::table('client');
-		if(!is_null($id)){
-			return DB::get($id);
-		}
 		$columms = array(
 					 'name'
 					,'email'
@@ -30,12 +26,11 @@ class ModelClient {
 					,'country'
 					,'zip_code'
 				 );
+		DB::table('client');
+		DB::select($columms);
+		if(!is_null($id)){
+			return DB::get($id);
+		}
 		return DB::get();
-	}
-
-	public static function token($token=''){
-		 DB::table('client')->where('token',$token);
-        $client = DB::get(array('token'))->RowObject();
-        return $client->token;  
 	}
 }

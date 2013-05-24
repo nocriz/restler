@@ -2,7 +2,9 @@
 
 use Database\Exceptions\DBDAOException;
 use Database\DAO\DAO;
+use Database\SearchParam;
 use \PDO;
+use \ArrayIterator;
 
 /**
  * Classe ClienteDAO
@@ -19,6 +21,8 @@ class DB {
     private $DAO;
     private $select;
     private $statement;
+    private $columns;
+    private $where;
     
     /**
      * Construtor
@@ -27,18 +31,30 @@ class DB {
     public function __construct( DAO $DAO ) {
         $this->DAO = $DAO;
         $this->key = 'id';
+        /**
+         * Atributos a serem buscados no banco de dados
+         * @var ArrayIterator
+         */
+        $this->where = new ArrayIterator();
+        $this->select();
     }
     
     public function table($table){
-        $this->table = $table;
+        $this->table = ' FROM '.$table;
         return $this;
     }
 
-    public function select($select=null){
+    public function select($select=array('*')){
         if(is_null($select)){
             throw new DBDAOException("Você deve passar o select.");
         }
+        $this->select = 'SELECT '.implode(',',$select).' ';
         return $this;
+    }
+
+    public function where($column,$cond,$value){
+        $placeholder = preg_replace('/(.*)\./', '', $column);
+        $this->where->append( new SearchParam( $column, $value , $cond, PDO::PARAM_INT ,$placeholder) );
     }
 
     /**
@@ -51,7 +67,7 @@ class DB {
         try {        
             $atributos = array();
             
-            $this->statement = $this->DAO->prepare( $this->select.' WHERE '.$this->key.' = :'.$this->key );
+            $this->statement = $this->DAO->prepare( $this->select.$this->table.' WHERE '.$this->key.' = :'.$this->key );
             $this->statement->execute( array( ':'.$this->key => $key )  );
             return (int)$this->statement->rowCount(); 
         } catch ( \PDOException $e ) {
@@ -70,7 +86,7 @@ class DB {
     public function get( $key ) {
         try {        
             $atributos = array();
-            $this->statement = $this->DAO->prepare( $this->select.' WHERE '.$this->key.' = :'.$this->key );
+            $this->statement = $this->DAO->prepare( $this->select.$this->table.' WHERE '.$this->key.' = :'.$this->key );
             $this->statement->execute( array( ':'.$this->key => $key )  );
             if( $this->statement->rowCount() >= 1 ) {            
                 $atributos = $this->statement->fetchAll( PDO::FETCH_ASSOC );
@@ -90,24 +106,23 @@ class DB {
      * @param SearchParam $searchParam A lista de parâmetros no padrão iterator
      * @retorno array Uma lista contendo um array associativo com os atributos de um cliente
      */    
-    public function getAll( Iterator $searchParam = null ,$type='AND') {                  
-        
-        if( $searchParam instanceof Iterator ) {
+    public function getAll( $type='AND' ) {
+        if( $this->where instanceof ArrayIterator ) {
             $where = array();
-            foreach( $searchParam AS $key => $param ) {
+            foreach( $this->where AS $key => $param ) {
                 $where[] = $param->get_column().' '.$param->get_method().' :'.$param->get_placeholder();
             }
         }
         
         $where = isset( $where ) && count( $where ) > 0 ? ' WHERE '.implode( ' '.$type.' ', $where ) : '';
-        
+
         try {
             $atributos = array();
-            $this->select.$where;
-            $this->statement = $this->DAO->prepare( $this->select.$where );
+            $this->select.$this->table.$where;
+            $this->statement = $this->DAO->prepare( $this->select.$this->table.$where );
             
             if( isset( $where{1} ) ) {
-                foreach( $searchParam AS $key => $param ) {
+                foreach( $this->where AS $key => $param ) {
                     $this->statement->bindValue( ':'.$param->get_placeholder(), $param->get_value(), $param->get_pdo_param() );
                 }
             }

@@ -28,17 +28,25 @@ class DB {
 		$dbuser = $connections[$driver]['username'];
 		$dbpwd  = $connections[$driver]['password'];
 
-		switch ($driver)
-		{
-			case 'mysql':
-				$defaultConnectorConfig = new MySQL( $dbhost, $dbname, $dbuser, $dbpwd );
-				$registry->set( 'defaultConnectorConfig', $defaultConnectorConfig );
-			break;
-		}
+		/**
+		 * Verifica se a chave já existe
+		 */
+		try{
+			if($registry->get( 'defaultDAO' )){}
+		}catch(\RuntimeException $e){
+			switch ($driver)
+			{
+				case 'mysql':
+					$defaultConnectorConfig = new MySQL( $dbhost, $dbname, $dbuser, $dbpwd );
+					$registry->set( 'defaultConnectorConfig', $defaultConnectorConfig );
+				break;
+			}
 
-		$defaultDAO = new DAO( $defaultConnectorConfig );
-		$registry->set( 'defaultDAO', $defaultDAO );
+			$defaultDAO = new DAO( $defaultConnectorConfig );
+			$registry->set( 'defaultDAO', $defaultDAO );	
+		}
 		static::$db = new DAODB( $registry->get( 'defaultDAO' ) );
+		
 		return static::$db;
 	}
 
@@ -46,12 +54,19 @@ class DB {
 		return static::connection()->table($table);
 	}
 
+	public static function select($select=array('*')){
+        return static::$db->select($select);
+    }
+
 	public static function get($id=null){
-		//$select = (array)$columns;
 		if(is_null($id)){
 			return static::$db->getAll();
 		}else{
-			return static::$db->get();
+			return static::$db->get($id);
 		}
+	}
+
+	public static function all(){
+		return static::$db->getAll();
 	}
 }
