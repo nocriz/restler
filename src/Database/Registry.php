@@ -31,7 +31,7 @@ class Registry {
      * Não é permitida a clonagem do registry
      */
     public function __clone() {
-        trigger_error('Não é permitido clonar a classe.', E_USER_ERROR );
+        throw new \RuntimeException("Não é permitido clonar a classe.");
     }
 
     /**

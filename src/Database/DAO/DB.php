@@ -12,7 +12,7 @@ use \PDO;
  * @package CRMAX
  */
 
-class DB_DAO {
+class DB {
     
     public $table;
     public $key;
@@ -90,7 +90,7 @@ class DB_DAO {
      * @param SearchParam $searchParam A lista de parâmetros no padrão iterator
      * @retorno array Uma lista contendo um array associativo com os atributos de um cliente
      */    
-    public function getAll( Iterator $searchParam = null ) {                  
+    public function getAll( Iterator $searchParam = null ,$type='AND') {                  
         
         if( $searchParam instanceof Iterator ) {
             $where = array();
@@ -99,7 +99,7 @@ class DB_DAO {
             }
         }
         
-        $where = isset( $where ) && count( $where ) > 0 ? ' WHERE '.implode( ' OR ', $where ) : '';
+        $where = isset( $where ) && count( $where ) > 0 ? ' WHERE '.implode( ' '.$type.' ', $where ) : '';
         
         try {
             $atributos = array();
@@ -136,7 +136,7 @@ class DB_DAO {
             $this->statement->execute(); 
             return true;
         } catch( \PDOException $e ) {
-            echo '<pre class="erro">'.$this->DAO->error_translate( $e->getMessage() ).'</pre>';
+            echo '<pre class="erro">'.$e->getMessage().'</pre>';
             return false;
         }
     }

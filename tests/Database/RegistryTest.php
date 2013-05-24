@@ -23,7 +23,7 @@ class RegistryTest extends AbstractTest
     /**
     * @depends testInstantiationWithoutArgumentsShouldWork
     */
-    public function testSetRegistryWithValidDataShouldWork()
+    public function testSetKeyWithValidDataShouldWork()
     {
         $data = array(1);
         $this->instance->set('teste1',$data);
@@ -36,7 +36,7 @@ class RegistryTest extends AbstractTest
      * @expectedException LogicException
      * @expectedExceptionMessage Já existe um registro para a chave "teste1".
      */
-    public function testSetRegistryWithInvalidDataShouldWork()
+    public function testSetKeyWithInvalidDataShouldWork()
     {
         $data = array(1);
         $this->instance->set('teste1',$data);
@@ -46,7 +46,7 @@ class RegistryTest extends AbstractTest
     /**
     * @depends testInstantiationWithoutArgumentsShouldWork
     */
-    public function testGetRegistryWithValidDataShouldWork()
+    public function testGetKeyWithValidDataShouldWork()
     {
         $data = array(1);
         $this->instance->set('teste2',$data);
@@ -57,16 +57,28 @@ class RegistryTest extends AbstractTest
      * @expectedException RuntimeException
      * @expectedExceptionMessage Não existe um registro para a chave "teste3".
      */
-    public function testUnregisterRegistryDataShouldThrownAnException()
+    public function testUnregisterKeyDataShouldThrownAnException()
     {
         $this->instance->set('teste3',1);
         $this->instance->unregister('teste3');
         $this->instance->get('teste3');
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Não existe um registro para a chave "teste4".
+     */
+    public function testUnregisterInvalidKeyDataShouldThrownAnException()
+    {
+        $this->instance->unregister('teste4');
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Não é permitido clonar a classe.
+     */
     public function testCloneRegistryDataShouldThrownAnException()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
         $clone = clone Registry::getInstance();
     }
 }

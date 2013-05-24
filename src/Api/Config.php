@@ -152,12 +152,13 @@ class Config implements InterfaceConfig {
 		// cascading of configuration options across environments.
 		foreach (static::paths() as $directory)
 		{
+			
 			if ($directory !== '' and file_exists($path = $directory.$file.'.php'))
 			{
 				$config = array_merge($config, require $path);
 			}
 		}
-
+	
 		return $config;
 	}
 
@@ -167,9 +168,9 @@ class Config implements InterfaceConfig {
 	 * @param  string  $bundle
 	 * @return array
 	 */
-	protected static function paths($path='.')
+	protected static function paths($path=__DIR__)
 	{
-		$paths[] = realpath($path).'/src/config/';
+		$paths[] = dirname($path).'/config/';
 
 		return $paths;
 	}

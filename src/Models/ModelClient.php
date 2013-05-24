@@ -30,7 +30,7 @@ class ModelClient {
 					,'country'
 					,'zip_code'
 				 );
-		return DB::getAll();
+		return DB::get();
 	}
 
 	public static function token($token=''){

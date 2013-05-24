@@ -9,8 +9,8 @@ class AccessControl implements iAuthenticate
     public static $role = 'client';
     public function __isAllowed()
     {
-        $token = $_SERVER['PHP_AUTH_USER'];
-        var_dump(ModelClient::token($token)); 
+        $token = isset($_SERVER['PHP_AUTH_USER'])?$_SERVER['PHP_AUTH_USER']:null;
+        //var_dump(ModelClient::token($token)); 
         //var_dump($roles);
         $roles = array('b599cfee8a52251902ed4a52cbe635cf' => 'client', '123456' => 'admin');
         //var_dump($roles);

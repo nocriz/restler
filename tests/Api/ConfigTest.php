@@ -25,12 +25,10 @@ class ConfigTest extends AbstractTest
     */
     public function testSetItemsWithValidDataShouldWork()
     {
-        $item = 'application.key';
         $array = array(
           'application' => array('key'=>'1234567')
         );
-        Config::set($item,'1234567');
-        //$this->assertEquals($instance, $return, 'Returned value should be the same instance for fluent interface');
+        Config::set('application.key','1234567');
         $this->assertAttributeEquals($array, 'items', $this->instance, 'Attribute was not correctly set');
     }
 
@@ -48,13 +46,7 @@ class ConfigTest extends AbstractTest
     * @depends testInstantiationWithoutArgumentsShouldWork
     */
     public function testGetItemsWithValidDataShouldWork()
-    {
-        Config::set('application.key','1234567');
-        
-        $array = array(
-          'application' => array('key'=>'1234567')
-        );
-        
+    {               
         $key = Config::get('application.key');
         $this->assertEquals('1234567',$key);
     }
@@ -70,11 +62,39 @@ class ConfigTest extends AbstractTest
     }
 
     /**
+     * @depends testInstantiationWithoutArgumentsShouldWork
+     */
+    public function testGetWithReturnFalseDataShouldWork()
+    {
+        $this->assertFalse(Config::get('test'));
+    }
+
+    /**
     * @depends testInstantiationWithoutArgumentsShouldWork
     */
     public function testGetItemsWithValidFileDataShouldWork()
     {   
         $key = Config::get('settings.key');
         $this->assertEquals('7vEqqJtCQGZ2yHEl2aMjJfGTYoYnqr6z',$key);
+    }
+
+    /**
+    * @depends testInstantiationWithoutArgumentsShouldWork
+    */
+    public function testSetWithValidDataShouldWork()
+    {   
+        $array=array(
+            'application'=>array(
+                'key' => '1234567'
+            ),
+            'settings'=>array(
+                'key'=> '7vEqqJtCQGZ2yHEl2aMjJfGTYoYnqr6z'
+            ),
+            'config'=>'12345'
+        );
+        $key = Config::set('config','12345');
+        $this->assertAttributeEquals($array, 'items', $this->instance, 'Attribute was not correctly set');
+        $key = Config::get('config');
+        $this->assertEquals('12345',$key);
     }
 }

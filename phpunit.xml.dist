@@ -15,7 +15,7 @@
   <!-- Filters for code coverage reporting -->
   <filter>
     <whitelist>
-      <directory>./</directory>
+      <directory>./src</directory>
       <exclude>
         <directory>./tests</directory>
         <directory>./vendor</directory>

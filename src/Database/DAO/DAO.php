@@ -26,23 +26,5 @@ class DAO extends PDO {
         
         parent::__construct( $config->get_DSN(), $config->get_user(), $config->get_password(), array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'')  );
         parent::setAttribute( PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION );
-    } 
-    
-    public function next( $sequence ) {
-        
-        $statement = $this->prepare( sprintf( 'SELECT nextval("%s")', $sequence ) );
-        $statement->execute();                   
-        return (int)$statement->fetchColumn();    
-    }
-    
-    public function error_translate( $erro ) {
-        if( stripos( $erro, 'number of bound variables does not match number of tokens' ) ) {
-            $erro = 'N&uacute;mero de tokens n&atilde;o corresponde ao n&uacute;mero de vari&aacute;veis';
-        } else if( stripos( $erro, 'Duplicate entry' ) ) {
-            $erro = 'Foram encontrados valores duplicados no sistema';
-        }
-        return $erro;
-    }
-    
-    
+    }    
 }
