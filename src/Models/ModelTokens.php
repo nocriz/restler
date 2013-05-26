@@ -15,7 +15,7 @@ use Database\DB as DB;
 class ModelTokens {
 
 	public static function token($token=''){
-		DB::table('tokens')->where('token','=',$token);
+		DB::table('token')->where('token','=',$token);
         return DB::get();
 	}
 }
