@@ -14,7 +14,21 @@ use Database\DB as DB;
 
 class ModelClient {
 
-	public static function get($id=null){
+	public static function get_user($id=null){
+		$columms = array(
+					 'name'
+					,'email'
+					,'phone'
+				 );
+		DB::table('client');
+		DB::select($columms);
+		if(!is_null($id)){
+			return DB::get($id);
+		}
+		return DB::get();
+	}
+
+	public static function get_admin($id=null){
 		$columms = array(
 					 'name'
 					,'email'
