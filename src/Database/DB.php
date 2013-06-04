@@ -44,7 +44,7 @@ class DB {
 
 			$defaultDAO = new DAO( $defaultConnectorConfig );
 			$registry->set( 'defaultDAO', $defaultDAO );	
-		}
+		}		
 		static::$db = new DAODB( $registry->get( 'defaultDAO' ) );
 		
 		return static::$db;

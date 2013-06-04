@@ -1,17 +1,17 @@
 {
-    "name": "nocriz/restler",
-    "require": {
-        "phpunit/phpunit": "3.7.1",
-        "php": ">=5.3.0",
-        "luracast/restler": "3.x-dev",
-        "behat/behat": "2.4.*@stable"
-    },
+    "name": "nocriz/restler",        
     "authors":[
         {
             "name":"Ramon Barros",
             "email": "contato@nocriz.com"
         }
     ],
+    "require":{
+        "php":">=5.3.0",
+        "phpunit/phpunit": "3.7.1",
+        "luracast/restler": "3.x-dev",
+        "behat/behat": "2.4.*@stable"
+    },
     "config": {
         "bin-dir": "bin/"
     },
