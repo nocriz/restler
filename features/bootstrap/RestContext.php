@@ -1,5 +1,7 @@
 <?php
+
 use Behat\Behat\Context\BehatContext;
+use Behat\Mink\Mink;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -30,6 +32,7 @@ class RestContext extends BehatContext
     private $_charset = null;
     private $_language = null;
     private $_data = null;
+    private $_session = null;
 
     private $_parameters = array();
 
@@ -41,6 +44,7 @@ class RestContext extends BehatContext
     {
         // Initialize your context here
 
+        $this->_session = new Behat\Mink\Mink();
         $this->_restObject = new stdClass();
         $this->_parameters = $parameters;
         $this->_client = new Guzzle\Service\Client();
@@ -580,4 +584,20 @@ class RestContext extends BehatContext
     {
         $this->printDebug("$this->_request\n$this->_response");
     }
+
+    /**
+     * @Given /^that I log in with "([^"]*)" and "([^"]*)"$/
+     */
+    public function thatILogInWithAnd($username, $password)
+    {
+        //$this->_session->registerSession('basic', base64_encode($username.$password));
+        //$this->_session->setDefaultSessionName('basic');
+        //$this->_session->getSession()->setBasicAuth($username,$password);
+        
+        //$this->_client->setAuth($username, $password);
+        $driver = new \Behat\Mink\Driver\GoutteDriver();
+        $session = new \Behat\Mink\Session($driver);
+        return $session->setBasicAuth($username,$password);
+    }
+
 }

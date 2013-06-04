@@ -15,7 +15,9 @@ class AccessControl implements iAuthenticate
         //$roles = array('12345' => 'user', '67890' => 'admin');
         $roles = array();
         $token = isset($_SERVER['PHP_AUTH_USER'])?$_SERVER['PHP_AUTH_USER']:null;
-        
+        if(is_null($token)){
+            return false;
+        }
         $tokens = ModelTokens::token($token);
         if(is_array($tokens)){
             foreach ($tokens as $role) {
@@ -23,12 +25,11 @@ class AccessControl implements iAuthenticate
                     $roles[$role['token']] = $role['role'];
                 //}
             }
-        }
-        
-        if (count($roles) and !isset($_SERVER['PHP_AUTH_USER'])|| !array_key_exists($_SERVER['PHP_AUTH_USER'], $roles)) {
+        }        
+        if (count($roles) and !isset($_SERVER['PHP_AUTH_USER'])|| !array_key_exists($token, $roles)) {
             return false;
         }
-        static::$role = $roles[$_SERVER['PHP_AUTH_USER']];
+        static::$role = $roles[$token];
         return static::$requires == static::$role || static::$role == 'admin';
     }
 }
