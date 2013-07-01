@@ -26,6 +26,10 @@ class Client extends AbstractClient {
 		}
 	}
 	*/
+
+	public function get($id=null){
+		return array($id);
+	}
 	
 	/**
      * @access protected
